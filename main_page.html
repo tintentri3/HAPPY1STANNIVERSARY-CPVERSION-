@@ -1,0 +1,339 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Happy 1st Anniversary</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#121414",
+              "on-background": "#e2e2e2",
+              "on-surface": "#e2e2e2",
+              "on-surface-variant": "#e6bdbc",
+              "primary-container": "#dc143c",
+              "on-primary-container": "#fff1f0",
+              primary: "#ffb3b3",
+              surface: "#121414",
+              "surface-container": "#1e2020",
+              "outline-variant": "#5c3f3f",
+              "secondary-container": "#920703",
+              "on-secondary-container": "#ff9a8a",
+            },
+            fontFamily: {
+              "display-lg": ["EB Garamond"],
+              "display-lg-mobile": ["EB Garamond"],
+              "headline-md": ["EB Garamond"],
+              "label-sm": ["Hanken Grotesk"],
+              "body-md": ["Hanken Grotesk"],
+              "body-lg": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "display-lg": [
+                "64px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "40px",
+                { lineHeight: "48px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "500" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+            spacing: {
+              "margin-desktop": "80px",
+              "margin-mobile": "20px",
+              "stack-lg": "48px",
+              gutter: "24px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /*
+      KEY FIX: The page starts with a crimson overlay on top.
+      We animate THAT overlay to fade out — the body itself stays dark the whole time.
+      No body background-color animation = no stuck red background.
+    */
+      body {
+        background-color: #121414;
+        overflow-x: hidden;
+        color: #e2e2e2;
+      }
+
+      /* Crimson entry overlay — starts opaque, fades to transparent */
+      #entry-overlay {
+        position: fixed;
+        inset: 0;
+        background: #dc143c;
+        z-index: 9000;
+        pointer-events: none;
+        opacity: 1; /* starts visible, JS animates it away */
+        transition: none; /* JS will set this */
+      }
+
+      /* Page content fades in after overlay clears */
+      #page-wrapper {
+        opacity: 0;
+        transform: scale(0.97);
+        transition: none;
+      }
+
+      /* Background photo collage */
+      .bg-collage {
+        position: fixed;
+        inset: 0;
+        background-image: url("https://res.cloudinary.com/dgn4hh5fw/image/upload/v1779815052/Untitled_design_1_pjhzyj.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        filter: grayscale(40%) sepia(20%);
+        mix-blend-mode: luminosity;
+        z-index: -1;
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+      }
+
+      .petal {
+        position: fixed;
+        top: -10%;
+        user-select: none;
+        pointer-events: none;
+        z-index: 10;
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+      @keyframes fall {
+        0% {
+          transform: translateY(0) rotate(0deg) translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg) translateX(100px);
+          opacity: 0;
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+      .floating-heart {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Exit overlay (dark, for going to next page) */
+      #exit-overlay {
+        position: fixed;
+        inset: 0;
+        background: #121414;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease-in-out;
+      }
+      #exit-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .ambient-glow {
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(220, 20, 60, 0.07) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 0;
+        transition:
+          left 0.12s ease-out,
+          top 0.12s ease-out;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background">
+    <!-- Entry overlay: covers the page crimson on load, then fades away -->
+    <div id="entry-overlay"></div>
+
+    <!-- Exit overlay: dark fade when navigating away -->
+    <div id="exit-overlay"></div>
+
+    <div class="bg-collage"></div>
+    <div class="ambient-glow" id="ambient-glow"></div>
+    <div id="petal-container"></div>
+
+    <div id="page-wrapper">
+      <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-center items-center px-margin-mobile md:px-margin-desktop py-4 bg-surface/10 backdrop-blur-xl border-b border-white/10"
+      >
+        <div class="flex items-center justify-center w-full max-w-[1200px]">
+          <div
+            class="font-display-lg text-sm md:text-headline-md text-primary tracking-widest uppercase whitespace-nowrap truncate"
+          >
+            Happy 1st Anniversary
+          </div>
+        </div>
+      </header>
+
+      <main
+        class="relative min-h-screen flex items-center justify-center pt-20 md:pt-24 pb-20 md:pb-32 px-margin-mobile"
+      >
+        <section
+          class="glass-panel relative z-20 max-w-[800px] w-full p-8 md:p-16 rounded-xl flex flex-col items-center text-center gap-stack-lg"
+        >
+          <div class="space-y-4">
+            <div class="flex flex-col items-center gap-4">
+              <div class="floating-heart">
+                <img
+                  src="https://res.cloudinary.com/dgn4hh5fw/image/upload/v1779804696/Untitled_design_fuypyw.png"
+                  alt="Pixel Heart"
+                  class="w-24 h-24 md:w-32 md:h-32 drop-shadow-[0_0_25px_rgba(220,20,60,0.6)] object-contain"
+                />
+              </div>
+              <h1
+                class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface"
+              >
+                Our Love Story
+              </h1>
+            </div>
+            <p
+              class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed"
+            >
+              Three hundred and sixty-five days of laughter, whispered secrets,
+              and building a world that only belongs to us. Every frame of this
+              past year is a cherished memory that illuminates our path forward.
+            </p>
+          </div>
+          <div class="flex flex-col md:flex-row gap-gutter items-center">
+            <button
+              id="journey-btn"
+              class="group relative overflow-hidden bg-primary-container text-on-primary-container px-8 md:px-10 py-4 md:py-5 rounded-full font-label-sm text-label-sm tracking-[0.2em] transition-all hover:shadow-[0_0_30px_rgba(220,20,60,0.5)] active:scale-95"
+            >
+              <span class="relative z-10">VIEW OUR JOURNEY</span>
+              <div
+                class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+              ></div>
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // ── ENTRY ANIMATION ──────────────────────────────────────────────────────
+      // Check if we came from the heart transition
+      const fromHeart = sessionStorage.getItem("fromHeart") === "1";
+      sessionStorage.removeItem("fromHeart"); // consume it so refresh doesn't retrigger
+
+      const entryOverlay = document.getElementById("entry-overlay");
+      const pageWrapper = document.getElementById("page-wrapper");
+
+      if (fromHeart) {
+        // Page starts: crimson overlay visible, content hidden
+        // Step 1: hold for a beat, then fade crimson overlay out
+        setTimeout(() => {
+          entryOverlay.style.transition =
+            "opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1)";
+          entryOverlay.style.opacity = "0";
+
+          // Step 2: simultaneously reveal page content
+          pageWrapper.style.transition =
+            "opacity 0.9s ease, transform 0.9s ease";
+          pageWrapper.style.opacity = "1";
+          pageWrapper.style.transform = "scale(1)";
+        }, 200); // brief hold so crimson feels like it "arrived" from the heart
+      } else {
+        // Normal load (no transition): just show everything immediately
+        entryOverlay.style.opacity = "0";
+        pageWrapper.style.opacity = "1";
+        pageWrapper.style.transform = "scale(1)";
+      }
+
+      // ── EXIT TRANSITION ──────────────────────────────────────────────────────
+      document.getElementById("journey-btn").addEventListener("click", () => {
+        const overlay = document.getElementById("exit-overlay");
+        overlay.classList.add("active");
+        setTimeout(() => {
+          window.location.href = "our_journey.html";
+        }, 500);
+      });
+
+      // ── PETALS ───────────────────────────────────────────────────────────────
+      const petalContainer = document.getElementById("petal-container");
+      const petalColors = ["#DC143C", "#920022", "#680015", "#ffb3b3"];
+      function createPetal() {
+        const p = document.createElement("div");
+        p.classList.add("petal");
+        const size = Math.random() * 15 + 10;
+        const dur = Math.random() * 4 + 3;
+        const del = Math.random() * 2;
+        p.style.cssText = `width:${size}px;height:${size * 1.2}px;background-color:${petalColors[Math.floor(Math.random() * 4)]};left:${Math.random() * 100}%;animation-duration:${dur}s;animation-delay:${del}s;border-radius:50% 0 50% 50%;filter:blur(1px);opacity:${Math.random() * 0.6 + 0.2};`;
+        petalContainer.appendChild(p);
+        setTimeout(() => p.remove(), (dur + del) * 1000);
+      }
+      for (let i = 0; i < 60; i++) createPetal();
+      setInterval(createPetal, 150);
+
+      // ── AMBIENT GLOW FOLLOWS MOUSE ───────────────────────────────────────────
+      document.addEventListener("mousemove", (e) => {
+        const g = document.getElementById("ambient-glow");
+        if (g) {
+          g.style.left = e.clientX + "px";
+          g.style.top = e.clientY + "px";
+        }
+      });
+    </script>
+  </body>
+</html>

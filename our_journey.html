@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OUR STORY | Anniversary Celebration</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Hanken+Grotesk:wght@100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<style>
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+    /* Background image setup */
+    .bg-collage {
+        position: fixed;
+        inset: 0;
+        background-image: url('https://res.cloudinary.com/dgn4hh5fw/image/upload/v1779815052/Untitled_design_1_pjhzyj.jpg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15; /* Low transparency */
+        filter: grayscale(40%) sepia(20%);
+        mix-blend-mode: luminosity; /* Blending with theme */
+        z-index: -1;
+    }
+
+/* PAGE FADE */
+body {
+    background-color: #121414;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-y: auto;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+body.loaded-page {
+    opacity: 1;
+}
+
+/* TRANSITION OVERLAY */
+#transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: #121414;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
+}
+
+#transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* GLASS */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-left: 1px solid rgba(255,255,255,0.2);
+}
+
+/* TIMELINE */
+.timeline-line {
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        #dc143c 15%,
+        #dc143c 85%,
+        transparent
+    );
+}
+
+/* REVEALS */
+.reveal-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-image {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.22,1,0.36,1);
+    transition-delay: 0.2s;
+}
+
+.active .reveal-content,
+.active .reveal-image {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* PAGE ENTRANCE */
+#main-content-wrapper {
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+#main-content-wrapper.loaded {
+    opacity: 1;
+}
+
+/* GLOW */
+.glow-accent {
+    filter: drop-shadow(0 0 15px rgba(220,20,60,0.4));
+}
+
+/* MUSIC BAR */
+@keyframes progress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.animate-progress {
+    animation: progress 180s linear infinite;
+}
+
+.paused {
+    animation-play-state: paused !important;
+}
+
+/* FOR PETALS */
+.petal {
+        position: fixed;
+        top: -10%;
+        user-select: none;
+        pointer-events: none;
+        z-index: 10;
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+
+ @keyframes fall {
+        0% {
+            transform: translateY(0) rotate(0deg) translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh) rotate(360deg) translateX(100px);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+  .timeline-line {
+    display: none;
+  }
+}
+</style>
+
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                primary: "#ffb3b3",
+                background: "#121414",
+                "primary-container": "#dc143c",
+                "secondary-container": "#920703",
+                "on-surface": "#e2e2e2",
+                "on-surface-variant": "#e6bdbc",
+                surface: "#121414"
+            },
+            fontFamily: {
+                "display-lg": ["EB Garamond"],
+                "headline-md": ["EB Garamond"],
+                "body-md": ["Hanken Grotesk"],
+                "body-lg": ["Hanken Grotesk"],
+                "label-sm": ["Hanken Grotesk"]
+            },
+            fontSize: {
+                "display-lg": [
+                    "64px",
+                    {
+                        lineHeight: "72px",
+                        letterSpacing: "-0.02em",
+                        fontWeight: "600"
+                    }
+                ],
+                "display-lg-mobile": [
+                    "40px",
+                    {
+                        lineHeight: "48px",
+                        fontWeight: "600"
+                    }
+                ],
+                "headline-md": [
+                    "32px",
+                    {
+                        lineHeight: "40px",
+                        fontWeight: "500"
+                    }
+                ],
+                "body-md": [
+                    "16px",
+                    {
+                        lineHeight: "24px"
+                    }
+                ],
+                "body-lg": [
+                    "18px",
+                    {
+                        lineHeight: "28px"
+                    }
+                ]
+            }
+        }
+    }
+}
+</script>
+</head>
+
+<body class="text-on-surface selection:bg-primary-container selection:text-white">
+
+<div class="bg-collage"></div>
+
+<div id="petal-container"></div>
+
+<!-- TRANSITION -->
+<div id="transition-overlay"></div>
+
+<!-- MUSIC -->
+<audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- TOP NAV -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-center px-4 py-3 bg-surface/10 backdrop-blur-xl border-b border-white/10">
+    <div class="flex items-center justify-center w-full max-w-[1200px]">
+    <div class="font-display-lg text-sm md:text-2xl text-primary tracking-widest uppercase whitespace-nowrap truncate">
+            Happy 1st Anniversary
+        </div>
+    </div>
+</header>
+
+<!-- BACKGROUND -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary-container/10 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary-container/10 rounded-full blur-[120px]"></div>
+</div>
+
+<!-- HERO -->
+<section class="relative min-h-screen pt-28 md:pt-40 pb-10 flex flex-col items-center justify-center text-center px-5">
+    <div class="mb-4 inline-block px-4 py-1 glass-panel rounded-full border border-primary/20">
+        <span class="text-primary uppercase tracking-[0.2em] text-sm">
+            Our Timeline
+        </span>
+    </div>
+
+    <h1 class="font-display-lg text-[40px] md:text-[64px] text-on-surface mb-6 uppercase">
+        Our Story
+    </h1>
+
+    <p class="font-body-lg text-on-surface-variant max-w-2xl mb-12">
+        From childhood friends to soulmates.
+    </p>
+
+    <!-- MUSIC PLAYER -->
+<div class="w-full max-w-md glass-panel p-4 md:p-6 rounded-2xl flex items-center gap-4 md:gap-6 relative overflow-hidden">
+        <button
+            class="w-14 h-14 bg-primary-container rounded-full flex items-center justify-center active:scale-95 transition-all"
+            id="play-button">
+
+            <span class="material-symbols-outlined text-white text-3xl" id="play-icon">
+                play_arrow
+            </span>
+        </button>
+
+        <div class="flex-grow text-left">
+
+            <h3 class="text-xl text-on-surface mb-1">
+                Libu-libong buwan (uuwian)
+            </h3>
+
+            <p class="text-on-surface-variant text-sm">
+                Kyle Raphael
+            </p>
+
+            <div class="w-full h-1 bg-white/10 rounded-full mt-4 overflow-hidden">
+                <div
+                    class="h-full bg-primary-container w-0 rounded-full paused"
+                    id="progress-bar">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Scroll Down Indicator -->
+<div class="mt-20 flex flex-col items-center gap-2 animate-bounce pointer-events-none" id="scroll-indicator">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Scroll Down</span>
+<span class="material-symbols-outlined text-primary text-3xl">keyboard_double_arrow_down</span>
+</div>
+
+<!-- TIMELINE -->
+<div id="main-content-wrapper">
+
+<main class="relative max-w-[1200px] mx-auto px-5 md:px-20 pb-40">
+
+<div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] timeline-line hidden md:block"></div>
+
+<div class="space-y-32 relative">
+
+<!-- Entry 1 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:text-right md:pr-16 order-2 md:order-1 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">2018</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">The Beginning</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">It all started when our friend introduced me to you, even though I already knew and saw you before during my tutor days. We used to play together a lot as kids, and back then, I didn’t realize that you had a crush on me. But honestly, I already had a little clue because our friends would always tease us together.</p>
+</div>
+<div class="relative order-1 md:order-2 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="The Beginning" class="w-full aspect-[4/3] object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-700" src="playing.png"/>
+<img alt="" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="" src=""/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 2 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:pl-16 order-2 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">2019</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Fav Memory Back Then</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">One of my favorite memories with you was during Simbang Gabi. I still remember how unexpected it was that we were both chosen to be the alay that time. We didn’t even know that both of us were there until we saw each other, and honestly, it made that moment even more special for me.</p>
+</div>
+<div class="relative order-1 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="First Date" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700 hover:scale-[1.02]" src="church.png"/>
+<img alt="" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 3 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:text-right md:pr-16 order-2 md:order-1 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">2020</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Pandemic Days</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">During this time, we lost contact with each other, but somehow we still managed to find our way back when we became classmates after I transferred to a new school. It felt nice seeing you again after so long, but after that school year ended, we slowly lost contact once more.</p>
+</div>
+<div class="relative order-1 md:order-2 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="Road Trip" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700" src="d08963c3-d4f8-4e95-9727-8b62b1715712.jfif"/>
+<img alt="doodle" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="doodle" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 4 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:pl-16 order-2 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">Dec 2021 - 2022</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">The Contact Is Back</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">Late that December, we found our way back to each other again. We were both upcoming Grade 8 students, even though we were already studying at different schools. This time, you finally confessed your feelings and started courting me. For a while, everything felt new and special, but sadly, things didn’t end the way we hoped. After a few months, we broke up and slowly lost contact once again.</p>
+</div>
+<div class="relative order-1 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="Holiday" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700" src="9f4a5d41-2d90-475e-bb09-f0e9096e6264.jfif"/>
+<img alt="doodle" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="doodle" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 5 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:text-right md:pr-16 order-2 md:order-1 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">2023 - 2024</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Once Again</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">In November 2023, we found our way back to each other once again. Even after everything that happened before, we both still felt the same, so we decided to try again. You courted me again, and for a while, everything felt happy and right, like maybe this time things would finally work out for us. But after 10 months of courting, we ended up breaking apart again and lost contact once more.</p>
+</div>
+<div class="relative order-1 md:order-2 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="New Year" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700" src="720c99ea-48bb-4781-93af-04a6f27054ca.jfif"/>
+<img alt="doodle" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="doodle" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 6 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:pl-16 order-2 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">2025</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Tadhana</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">We found our way back to each other again, but this time, we both agreed that we would stay as just friends and nothing more. Back then, we both had our own crushes, but sadly, both of us ended up getting rejected. We became each other’s comfort person, listening to one another’s rants and sharing our feelings. That’s when I started thinking that maybe we were really meant for each other, because no matter how many times we lost contact, we always somehow found our way back. And this time, you courted me once again.</p>
+</div>
+<div class="relative order-1 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="Valentine" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700" src="41a04617-1152-49bd-9062-453e80a90f14.jfif"/>
+<img alt="doodle" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="doodle" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Entry 7 -->
+<section class="reveal relative grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-stack-md items-center">
+<div class="md:text-right md:pr-16 order-2 md:order-1 reveal-content">
+<span class="font-label-sm text-label-sm text-primary-fixed mb-2 block italic">June 6, 2025</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">I Finally Said Yes</h2>
+<p class="font-body-md text-sm md:text-body-md text-on-surface-variant mb-6 leading-relaxed">After a couple of months of you courting me, I finally said yes because I knew and trusted that you could take care of me and love me the way I deserved. You stayed patient with me through everything, and little by little, you made me feel safe, appreciated, and genuinely happy. For the first time in a long while, I felt certain about us. After all the times we lost each other and somehow found our way back, I realized that maybe this was finally our right time. And honestly, saying yes to you became one of the happiest decisions I’ve made.</p>
+</div>
+<div class="relative order-1 md:order-2 reveal-image">
+<div class="glass-panel p-2 rounded-xl overflow-hidden">
+<img alt="Spring" class="w-full aspect-[4/3] object-cover rounded-lg transition-all duration-700" src="7f3321e3-730b-4e3e-b7ea-4d3b327ff7fd.jfif"/>
+<img alt="doodle" class="absolute -top-4 -left-4 w-12 h-12 rotate-[-15deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-flower1.png"/><img alt="doodle" class="absolute -bottom-4 -right-4 w-10 h-10 rotate-[20deg] opacity-80 pointer-events-none select-none mix-blend-screen" src="pixel-heartblue.png"/></div>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background hidden md:block glow-accent"></div>
+</section>
+
+<!-- Footer Action -->
+<div class="flex flex-col items-center justify-center py-stack-lg mb-20 space-y-6">
+<div class="w-12 h-px bg-outline-variant opacity-30 mb-4"></div>
+<button class="group relative flex items-center justify-center min-w-[280px] h-14 bg-primary-container text-white rounded-full crimson-glow transition-all duration-500 hover:scale-105 active:scale-95" id="gallery-btn">
+<span class="relative z-10 font-display-lg text-lg tracking-[0.2em] uppercase pl-2">View Our Gallery</span>
+<div class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+</button>
+
+<!-- FAB -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary-container text-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+
+<span class="material-symbols-outlined">
+favorite
+</span>
+
+</button>
+
+<script>
+
+// Petal system
+    const petalContainer = document.getElementById('petal-container');
+    const petalColors = ['#DC143C', '#920022', '#680015', '#ffb3b3'];
+
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        const size = Math.random() * 15 + 10;
+        const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+        const left = Math.random() * 100;
+        const duration = Math.random() * 4 + 3;
+        const delay = Math.random() * 2;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.2}px`;
+        petal.style.backgroundColor = color;
+        petal.style.left = `${left}%`;
+        petal.style.animationDuration = `${duration}s`;
+        petal.style.animationDelay = `${delay}s`;
+        petal.style.borderRadius = '50% 0 50% 50%';
+        petal.style.filter = 'blur(1px)';
+        petal.style.opacity = Math.random() * 0.6 + 0.2;
+        petalContainer.appendChild(petal);
+        setTimeout(() => { petal.remove(); }, (duration + delay) * 1000);
+    }
+
+    for (let i = 0; i < 60; i++) { createPetal(); }
+    setInterval(createPetal, 150);
+
+// PAGE LOAD
+window.addEventListener('load', () => {
+
+    document.body.classList.add('loaded-page');
+
+    const wrapper = document.getElementById('main-content-wrapper');
+
+    setTimeout(() => {
+        wrapper.classList.add('loaded');
+    }, 200);
+});
+
+// MUSIC
+const playBtn = document.getElementById('play-button');
+const playIcon = document.getElementById('play-icon');
+const progressBar = document.getElementById('progress-bar');
+const music = document.getElementById('bg-music');
+
+let isPlaying = false;
+
+playBtn.addEventListener('click', () => {
+
+    isPlaying = !isPlaying;
+
+    if (isPlaying) {
+
+        music.play();
+
+        playIcon.textContent = 'pause';
+
+        progressBar.classList.remove('paused');
+        progressBar.classList.add('animate-progress');
+
+    } else {
+
+        music.pause();
+
+        playIcon.textContent = 'play_arrow';
+
+        progressBar.classList.add('paused');
+    }
+});
+
+// REVEAL
+const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+});
+
+// GALLERY TRANSITION
+document.getElementById('gallery-btn').addEventListener('click', () => {
+
+    const overlay = document.getElementById('transition-overlay');
+
+    overlay.classList.add('active');
+
+    setTimeout(() => {
+        window.location.href = 'our_gallery.html';
+    }, 600);
+});
+</script>
+
+</body>
+</html>

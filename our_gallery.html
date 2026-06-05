@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Happy 1st Anniversary | Exhibition Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Hanken+Grotesk:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-low": "#1a1c1c",
+                "on-tertiary-container": "#f6f3f3",
+                "primary": "#ffb3b3",
+                "outline-variant": "#5c3f3f",
+                "secondary-fixed": "#ffdad4",
+                "inverse-primary": "#bf0030",
+                "on-surface": "#e2e2e2",
+                "primary-container": "#dc143c",
+                "surface-container-highest": "#333535",
+                "surface": "#121414",
+                "outline": "#ac8888",
+                "on-secondary-fixed-variant": "#920703",
+                "surface-tint": "#ffb3b3",
+                "surface-container-high": "#282a2b",
+                "surface-bright": "#38393a",
+                "on-primary": "#680015",
+                "surface-variant": "#333535",
+                "secondary-container": "#920703",
+                "on-tertiary": "#313030",
+                "on-surface-variant": "#e6bdbc",
+                "on-error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#c8c6c5",
+                "secondary-fixed-dim": "#ffb4a8",
+                "on-background": "#e2e2e2",
+                "on-tertiary-fixed": "#1c1b1b",
+                "on-primary-fixed-variant": "#920022",
+                "on-primary-fixed": "#40000a",
+                "error-container": "#93000a",
+                "on-secondary": "#690000",
+                "inverse-on-surface": "#2f3131",
+                "background": "#121414",
+                "on-primary-container": "#fff1f0",
+                "surface-container": "#1e2020",
+                "primary-fixed": "#ffdad9",
+                "surface-dim": "#121414",
+                "primary-fixed-dim": "#ffb3b3",
+                "tertiary-container": "#706f6f",
+                "surface-container-lowest": "#0c0f0f",
+                "on-secondary-container": "#ff9a8a",
+                "inverse-surface": "#e2e2e2",
+                "on-secondary-fixed": "#410000",
+                "tertiary-fixed": "#e5e2e1",
+                "on-error": "#690005",
+                "tertiary": "#c8c6c5",
+                "error": "#ffb4ab",
+                "secondary": "#ffb4a8",
+                "on-tertiary-fixed-variant": "#474746"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "8px",
+                "stack-lg": "48px",
+                "margin-mobile": "20px",
+                "unit": "4px",
+                "stack-md": "24px",
+                "margin-desktop": "80px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "label-sm": ["Hanken Grotesk"],
+                "display-lg": ["EB Garamond"],
+                "body-lg": ["Hanken Grotesk"],
+                "display-lg-mobile": ["EB Garamond"],
+                "body-md": ["Hanken Grotesk"],
+                "headline-md": ["EB Garamond"],
+                "cursive": ["EB Garamond", "serif"]
+            },
+            "fontSize": {
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["64px", {"lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "600"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+body {
+    background-color: #0c0f0f;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+        .museum-spotlight {
+            background: radial-gradient(circle at 50% 30%, rgba(220, 20, 60, 0.12) 0%, rgba(18, 20, 20, 0) 70%);
+        }
+        .polaroid-container {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding: 20px 20px;
+            gap: 25px;
+            align-items: center;
+
+            -webkit-overflow-scrolling: touch;
+        }
+        .polaroid-container::-webkit-scrollbar {
+            display: none;
+        }
+        .polaroid-card {
+            flex: 0 0 auto;
+            scroll-snap-align: center;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.05);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease;
+            opacity: 0;
+            transform: translateX(100px) rotate(0deg);
+        }
+        .polaroid-card.active {
+            opacity: 1;
+            transform: translateX(0) rotate(var(--rotation));
+        }
+        .polaroid-card:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 50;
+        }
+        .handwriting {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+        }
+        .polaroid-container {
+            scroll-behavior: smooth;
+        }
+        
+        .petal {
+        position: fixed;
+        top: -10%;
+        user-select: none;
+        pointer-events: none;
+        z-index: 10;
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+        0% {
+            transform: translateY(0) rotate(0deg) translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh) rotate(360deg) translateX(100px);
+            opacity: 0;
+        }
+        }
+        
+        #transition-overlay {
+        position: fixed;
+        inset: 0;
+        background: #0c0f0f;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9999;
+        transition: opacity 0.6s ease;
+    }
+
+        #transition-overlay.active {
+        opacity: 1;
+    }
+    /* PAGE SCROLLBAR - same as Pasted code (1) */
+
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #1a1c1c;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #47242b;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #dc143c;
+    }
+
+    @media (max-width: 768px) {
+    .polaroid-card {
+        width: 260px;
+    }
+}
+    </style>
+</head>
+<body class="font-body-md text-on-surface selection:bg-primary selection:text-on-primary min-h-screen overflow-x-hidden">
+
+<div id="transition-overlay"></div>
+<div id="petal-container"></div>
+
+<!-- TOP NAV -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-center px-4 py-3 bg-surface/10 backdrop-blur-xl border-b border-white/10">
+  <div class="flex items-center justify-center w-full max-w-[1200px]">
+    <div class="font-display-lg text-sm md:text-2xl text-primary tracking-widest uppercase whitespace-nowrap truncate">
+            Happy 1st Anniversary
+        </div>
+    </div>
+</header>
+
+<main class="relative min-h-screen flex flex-col justify-center">
+<!-- Ambient Atmosphere -->
+<div class="fixed inset-0 pointer-events-none museum-spotlight z-0"></div>
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary-container/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 w-[400px] h-[400px] bg-primary-container/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Section Header -->
+<section class="relative z-10 px-margin-mobile md:px-margin-desktop text-center mt-20">
+<h1 class="font-display-lg text-3xl md:text-display-lg text-on-surface mb-2">
+                A Year in Frames
+            </h1>
+<p class="max-w-2xl mx-auto font-body-md text-on-surface-variant opacity-80 italic">
+                "Every moment we shared is a piece of art hanging in the gallery of my heart."
+            </p>
+</section>
+<!-- Horizontal Gallery -->
+<div class="relative z-10 w-full overflow-hidden mt-8">
+<div class="polaroid-container" id="galleryContainer"><!-- Polaroid 1 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -1.5deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 1" class="w-full h-full object-cover" src="june.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">JUNE 2025</p>
+</div>
+</div>
+<!-- Polaroid 2 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 2deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 2" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" src="july.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">JULY 2025</p>
+</div>
+</div>
+<!-- Polaroid 3 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -2deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 3" class="w-full h-full object-cover" src="august.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">AUGUST 2025</p>
+</div>
+</div>
+<!-- Polaroid 4 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 1.2deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 4" class="w-full h-full object-cover" src="sept.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">SEPTEMBER 2025</p>
+</div>
+</div>
+<!-- Polaroid 5 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -1deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 5" class="w-full h-full object-cover" src="oct.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">OCTOBER 2025</p>
+</div>
+</div>
+<!-- Polaroid 6 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 1.5deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 6" class="w-full h-full object-cover" src="november.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">NOVEMBER 2025</p>
+</div>
+</div>
+<!-- Polaroid 7 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -2.5deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 7" class="w-full h-full object-cover" src="december.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">DECEMBER 2025</p>
+</div>
+</div>
+<!-- Polaroid 8 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 2.2deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 8" class="w-full h-full object-cover" src="january.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">JANUARY 2026</p>
+</div>
+</div>
+<!-- Polaroid 9 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -1.8deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 9" class="w-full h-full object-cover" src="feb.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">FEBRUARY 2026</p>
+</div>
+</div>
+<!-- Polaroid 10 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 1.1deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 10" class="w-full h-full object-cover" src="march.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">MARCH 2026</p>
+</div>
+</div>
+<!-- Polaroid 11 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: 1.1deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 10" class="w-full h-full object-cover" src="april.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">APRIL 2026</p>
+</div>
+</div>
+
+<!-- Polaroid 12 -->
+<div class="polaroid-card bg-white p-5 pb-14 w-[320px]" style="--rotation: -1.8deg;">
+<div class="bg-surface-container aspect-[3/4] overflow-hidden">
+<img alt="Portrait 12" class="w-full h-full object-cover" src="may.jpg"/>
+</div>
+<div class="mt-6 text-center">
+<p class="handwriting text-[#2a2a2a] text-body-lg">MAY 2026</p>
+</div>
+</div>
+
+<!-- Buffer space at end -->
+<div class="flex-none w-20"></div></div>
+</div>
+<!-- Quote -->
+<section class="relative z-10 px-margin-mobile flex justify-center items-center mt-8">
+<div class="max-w-xl text-center">
+<span class="material-symbols-outlined text-primary mb-2 block" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</section>
+</main>
+
+<!-- Footer Action -->
+<div class="flex flex-col items-center justify-center py-stack-lg mb-20 space-y-6">
+<div class="w-12 h-px bg-outline-variant opacity-30 mb-4"></div>
+<button class="group relative flex items-center justify-center min-w-[240px] md:min-w-[280px] h-14 bg-primary-container text-white rounded-full crimson-glow transition-all duration-500 hover:scale-105 active:scale-95" id="gallery-btn">
+<span class="relative z-10 font-display-lg text-lg tracking-[0.2em] uppercase pl-2">NEXT</span>
+<div class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+</button>
+
+<script>
+    // Intersection Observer for the horizontal entries
+    const observerOptions = {
+        threshold: 0.1,
+        root: document.getElementById('galleryContainer'),
+        rootMargin: '0px 200px 0px 200px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.polaroid-card').forEach(el => observer.observe(el));
+
+    // Initial active class for elements already in view
+    setTimeout(() => {
+        document.querySelectorAll('.polaroid-card').forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.left < window.innerWidth) {
+                el.classList.add('active');
+            }
+        });
+    }, 100);
+
+    // Spotlight mouse move effect
+    document.addEventListener('mousemove', (e) => {
+        const spotlight = document.querySelector('.museum-spotlight');
+        if (spotlight) {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            spotlight.style.background =
+                `radial-gradient(circle at ${x}% ${y}%, rgba(220, 20, 60, 0.1) 0%, rgba(18, 20, 20, 0) 65%)`;
+        }
+    });
+
+    // FIXED SCROLL
+    const container = document.getElementById('galleryContainer');
+
+    container.addEventListener('wheel', (evt) => {
+        if (Math.abs(evt.deltaY) > Math.abs(evt.deltaX)) {
+            evt.preventDefault();
+
+            container.scrollBy({
+                left: evt.deltaY * 1.2,
+                behavior: 'smooth'
+            });
+        }
+    }, { passive: false });
+
+     // Petal system
+    const petalContainer = document.getElementById('petal-container');
+    const petalColors = ['#DC143C', '#920022', '#680015', '#ffb3b3'];
+
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        const size = Math.random() * 15 + 10;
+        const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+        const left = Math.random() * 100;
+        const duration = Math.random() * 4 + 3;
+        const delay = Math.random() * 2;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.2}px`;
+        petal.style.backgroundColor = color;
+        petal.style.left = `${left}%`;
+        petal.style.animationDuration = `${duration}s`;
+        petal.style.animationDelay = `${delay}s`;
+        petal.style.borderRadius = '50% 0 50% 50%';
+        petal.style.filter = 'blur(1px)';
+        petal.style.opacity = Math.random() * 0.6 + 0.2;
+        petalContainer.appendChild(petal);
+        setTimeout(() => { petal.remove(); }, (duration + delay) * 1000);
+    }
+
+    for (let i = 0; i < 60; i++) { createPetal(); }
+    setInterval(createPetal, 150);
+
+    // SONG FOR YOU TRANSITION
+    document.getElementById('gallery-btn').addEventListener('click', () => {
+
+        const overlay = document.getElementById('transition-overlay');
+
+        overlay.classList.add('active');
+
+        setTimeout(() => {
+            window.location.href = 'song_for_you.html';
+        }, 600);
+    });
+</script>
+</body>
+</html>

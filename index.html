@@ -1,0 +1,357 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Happy 1st Anniversary</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#121414",
+              "on-background": "#e2e2e2",
+              "on-surface": "#e2e2e2",
+              "on-surface-variant": "#e6bdbc",
+              "primary-container": "#dc143c",
+              "on-primary-container": "#fff1f0",
+              primary: "#ffb3b3",
+              surface: "#121414",
+            },
+            fontFamily: {
+              "display-lg": ["EB Garamond"],
+              "display-lg-mobile": ["EB Garamond"],
+              "headline-md": ["EB Garamond"],
+              "label-sm": ["Hanken Grotesk"],
+            },
+            fontSize: {
+              "display-lg": [
+                "64px",
+                {
+                  lineHeight: "72px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "40px",
+                { lineHeight: "48px", fontWeight: "600" },
+              ],
+              "headline-md": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "500" },
+              ],
+              "label-sm": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #121414;
+        overflow-x: hidden;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          overflow-y: auto;
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+          filter: drop-shadow(0 0 15px rgba(220, 20, 60, 0.6));
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+          filter: drop-shadow(0 0 35px rgba(220, 20, 60, 0.9));
+        }
+      }
+      .animate-heart-pulse {
+        animation: pulse-glow 3s ease-in-out infinite;
+      }
+      .glass-border {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .ambient-glow {
+        background: radial-gradient(
+          circle at center,
+          rgba(220, 20, 60, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      #heart-zoom-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+      #heart-zoom-overlay .heart-icon {
+        color: #dc143c;
+        font-size: 180px;
+        font-variation-settings: "FILL" 1;
+        transform: scale(1);
+        transform-origin: center center;
+        filter: drop-shadow(0 0 60px rgba(220, 20, 60, 1));
+        will-change: transform;
+      }
+      #crimson-wipe {
+        position: fixed;
+        inset: 0;
+        background: #dc143c;
+        z-index: 10000;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      @media (max-width: 768px) {
+        #hero-heart span {
+          transform: scale(0.85);
+        }
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+
+      #top-nav {
+        border-radius: 0 0 16px 16px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background min-h-screen flex flex-col relative overflow-hidden"
+  >
+    <!-- Crimson full-screen wipe (final layer) -->
+    <div id="crimson-wipe"></div>
+
+    <!-- Heart zoom overlay -->
+    <div id="heart-zoom-overlay">
+      <span class="material-symbols-outlined heart-icon" id="zoom-heart"
+        >favorite</span
+      >
+    </div>
+
+    <!-- Ambient glows -->
+    <div class="fixed inset-0 ambient-glow pointer-events-none"></div>
+    <div
+      class="fixed top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary-container/10 blur-[120px] rounded-full pointer-events-none"
+      id="glow-1"
+    ></div>
+    <div
+      class="fixed bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"
+      id="glow-2"
+    ></div>
+
+    <!-- Top nav -->
+    <header
+      class="fixed top-0 left-0 w-full z-50 flex items-center justify-center px-4 py-3 bg-surface/10 backdrop-blur-xl border-b border-white/10"
+      id="top-nav"
+    >
+      <div class="w-full max-w-[1200px] flex items-center justify-center">
+        <h1
+          class="whitespace-nowrap text-sm md:text-base font-bold tracking-widest text-primary uppercase truncate"
+        >
+          Happy 1st Anniversary
+        </h1>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main
+      class="min-h-screen flex flex-col items-center justify-center z-10 px-5 py-10"
+      id="main-content"
+    >
+      <div class="flex flex-col items-center justify-center gap-8 md:gap-12">
+        <div class="relative animate-heart-pulse" id="hero-heart">
+          <span
+            class="material-symbols-outlined text-primary-container text-[120px] md:text-[180px] drop-shadow-[0_0_20px_rgba(220,20,60,0.8)]"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >favorite</span
+          >
+          <span
+            class="material-symbols-outlined absolute inset-0 text-primary opacity-30 blur-md text-[120px] md:text-[180px]"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >favorite</span
+          >
+        </div>
+        <div
+          class="text-center space-y-6 flex flex-col items-center max-w-lg"
+          id="ui-elements"
+        >
+          <h1
+            class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-tight"
+          >
+            One year of us.
+          </h1>
+          <button
+            id="enter-btn"
+            class="mt-8 relative px-10 py-4 md:px-12 bg-white/5 backdrop-blur-xl glass-border rounded-full group overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border border-primary-container/30"
+            onclick="enterSite()"
+          >
+            <span
+              class="absolute inset-0 bg-primary-container opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+            ></span>
+            <span
+              class="font-label-sm text-label-sm text-primary-container tracking-[0.2em] relative z-10 uppercase transition-all duration-300 group-hover:text-primary"
+              >CLICK TO ENTER</span
+            >
+            <span
+              class="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-primary-container/50 to-transparent"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Decorative SVGs -->
+    <div
+      class="absolute top-20 left-20 opacity-10 pointer-events-none hidden md:block"
+    >
+      <svg
+        fill="none"
+        height="200"
+        viewBox="0 0 200 200"
+        width="200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class="text-primary-container"
+          d="M10 10C50 50 150 10 190 190"
+          stroke="currentColor"
+          stroke-width="0.5"
+        ></path>
+        <circle
+          class="text-primary-container"
+          cx="190"
+          cy="190"
+          fill="currentColor"
+          r="2"
+        ></circle>
+      </svg>
+    </div>
+    <div
+      class="absolute bottom-20 right-20 opacity-10 pointer-events-none hidden md:block transform rotate-180"
+    >
+      <svg
+        fill="none"
+        height="200"
+        viewBox="0 0 200 200"
+        width="200"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class="text-primary-container"
+          d="M10 10C50 50 150 10 190 190"
+          stroke="currentColor"
+          stroke-width="0.5"
+        ></path>
+        <circle
+          class="text-primary-container"
+          cx="190"
+          cy="190"
+          fill="currentColor"
+          r="2"
+        ></circle>
+      </svg>
+    </div>
+
+    <script>
+      function enterSite() {
+        const btn = document.getElementById("enter-btn");
+        btn.disabled = true;
+        btn.style.pointerEvents = "none";
+
+        const heroHeart = document.getElementById("hero-heart");
+        const ui = document.getElementById("ui-elements");
+        const nav = document.getElementById("top-nav");
+        const glow1 = document.getElementById("glow-1");
+        const glow2 = document.getElementById("glow-2");
+        const overlay = document.getElementById("heart-zoom-overlay");
+        const zoomHeart = document.getElementById("zoom-heart");
+        const wipe = document.getElementById("crimson-wipe");
+
+        // Step 1: Fade out surrounding UI instantly
+        heroHeart.classList.remove("animate-heart-pulse");
+        [heroHeart, ui, nav, glow1, glow2].forEach((el) => {
+          el.style.transition = "opacity 0.3s ease";
+          el.style.opacity = "0";
+          el.style.pointerEvents = "none";
+        });
+
+        // Step 2: Show the overlay heart
+        overlay.style.opacity = "1";
+
+        // Step 3: Zoom the heart to fill the screen
+        const screenDiag = Math.sqrt(
+          window.innerWidth ** 2 + window.innerHeight ** 2,
+        );
+        const heartPx = 180;
+        const targetScale = (screenDiag / heartPx) * 2.5;
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            zoomHeart.style.transition =
+              "transform 0.7s cubic-bezier(0.4, 0, 0.1, 1)";
+            zoomHeart.style.transform = `scale(${targetScale})`;
+          });
+        });
+
+        // Step 4: At peak of zoom, flood the crimson wipe over everything
+        setTimeout(() => {
+          wipe.style.transition = "opacity 0.2s ease";
+          wipe.style.opacity = "1";
+        }, 480);
+
+        // Step 5: Navigate — set a sessionStorage flag so the next page knows to animate IN
+        setTimeout(() => {
+          sessionStorage.setItem("fromHeart", "1");
+          window.location.href = "main_page.html";
+        }, 700);
+      }
+
+      // Parallax
+      document.addEventListener("mousemove", (e) => {
+        const ui = document.getElementById("ui-elements");
+        if (!ui || ui.style.opacity === "0") return;
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        const g1 = document.getElementById("glow-1");
+        const g2 = document.getElementById("glow-2");
+        if (g1) g1.style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+        if (g2) g2.style.transform = `translate(${-x * 30}px, ${-y * 30}px)`;
+      });
+    </script>
+  </body>
+</html>

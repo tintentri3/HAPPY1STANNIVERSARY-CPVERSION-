@@ -1,0 +1,1479 @@
+<!doctype html>
+
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Happy 1st Anniversary</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#ffb3b3",
+              background: "#121414",
+              "on-surface": "#e2e2e2",
+              "primary-container": "#dc143c",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      @font-face {
+        font-family: "Minecraft";
+        src: url("fonts/Minecraft.ttf") format("truetype");
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        overflow-x: hidden;
+      }
+
+      html,
+      body {
+        font-family: "Hanken Grotesk", sans-serif;
+        background: #121414;
+        color: #e2e2e2;
+        min-height: 100%;
+      }
+
+      body:not(.letter-open) {
+        overflow: hidden;
+      }
+
+      html:not(.letter-open),
+      body:not(.letter-open) {
+        height: 100vh;
+      }
+
+      html.letter-open,
+      body.letter-open {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(220, 20, 60, 0.18),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at bottom right,
+            rgba(220, 20, 60, 0.12),
+            transparent 30%
+          ),
+          #121414;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* ── UTILITIES ── */
+      .hidden-state {
+        display: none !important;
+      }
+      .font-cursive {
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+      }
+      .page-entrance {
+        animation: pageFade 1.5s ease-out;
+      }
+      @keyframes pageFade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.35),
+          inset 0 0 20px rgba(255, 255, 255, 0.03);
+      }
+
+      /* ── ANIMATIONS ── */
+      .opening-heart {
+        animation: introPop 1.5s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+      }
+      @keyframes introPop {
+        0% {
+          opacity: 0;
+          transform: scale(0.2) rotate(-15deg);
+          filter: blur(15px);
+        }
+        60% {
+          opacity: 1;
+          transform: scale(1.15) rotate(4deg);
+          filter: blur(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .click-title {
+        animation: floating 3s ease-in-out infinite;
+      }
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      .envelope-image {
+        display: block;
+        transition:
+          transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+          filter 0.6s ease;
+        will-change: transform, filter;
+        filter: drop-shadow(0 0 8px rgba(220, 20, 60, 0.28))
+          drop-shadow(0 0 20px rgba(220, 20, 60, 0.12));
+      }
+      .envelope-image.hovered {
+        transform: scale(1.22) translateY(-20px);
+        filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.9))
+          drop-shadow(0 0 45px rgba(255, 80, 120, 0.8));
+        animation: heartGlow 2s infinite ease-in-out 0.55s;
+      }
+      @keyframes heartGlow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 16px rgba(220, 20, 60, 0.7))
+            drop-shadow(0 0 36px rgba(255, 80, 120, 0.6));
+        }
+        50% {
+          filter: drop-shadow(0 0 26px rgba(220, 20, 60, 0.98))
+            drop-shadow(0 0 55px rgba(255, 80, 120, 0.9));
+        }
+      }
+
+      /* ── PETALS ── */
+      .petal {
+        position: fixed;
+        background: #dc143c;
+        border-radius: 150% 0 150% 0;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 200;
+      }
+      @keyframes fall {
+        0% {
+          transform: translateY(-10vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .fade-out {
+        opacity: 0;
+        transform: scale(0.4) translateY(-120px);
+        filter: blur(10px);
+        transition: all 0.9s ease;
+        pointer-events: none;
+      }
+
+      /* ── ENVELOPE SECTION ── */
+      #envelope-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        padding: 0;
+        margin: 0;
+
+        z-index: 1;
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      #envelope-trigger {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 40px;
+      }
+
+      .revealed .photo-scatter {
+        opacity: 0.65;
+        transform: scale(1) rotate(var(--rotation)) translateY(0);
+      }
+      .photo-scatter img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65);
+        transition:
+          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 0.4s ease,
+          opacity 0.3s ease;
+        display: block;
+        pointer-events: none;
+      }
+      .photo-scatter:hover img {
+        transform: scale(1.1) translateY(-7px);
+        box-shadow:
+          0 18px 45px rgba(0, 0, 0, 0.75),
+          0 0 30px rgba(220, 20, 60, 0.4);
+        opacity: 1;
+      }
+
+      #letter-overlay {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+
+        overflow: visible;
+
+        padding: 120px 16px 200px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+          url("https://res.cloudinary.com/dgn4hh5fw/image/upload/v1779815052/Untitled_design_1_pjhzyj.jpg");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      #letter-container {
+        position: relative;
+        width: 100%;
+        max-width: 100vw;
+        margin: 0 auto 40px;
+
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+
+        transition:
+          opacity 1s ease,
+          transform 1.2s ease;
+      }
+
+      #letter-container.pull-out {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      #letter-gif {
+        width: 100vw;
+        max-width: 100vw;
+
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+
+        display: block;
+      }
+
+      #letter-text-overlay {
+        position: absolute;
+
+        top: 35%;
+        left: 15%;
+
+        width: 70%;
+        height: 40%;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        -webkit-overflow-scrolling: touch;
+
+        padding: 10px 20px 20px;
+
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          black 3%,
+          black 97%,
+          transparent
+        );
+      }
+
+      @keyframes textReveal {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .letter-content {
+        color: #2b1b14;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        font-family: "Minecraft";
+      }
+      .letter-title {
+        text-align: center;
+        font-family: "Minecraft";
+        font-size: 2rem;
+        color: #5a2d2d;
+        transform: translateY(40px);
+      }
+
+      .letter-body {
+        transform: translateY(43px);
+      }
+
+      .letter-body p {
+        margin-bottom: 1rem;
+      }
+
+      .signature {
+        margin-top: 120px;
+        text-align: right;
+        transform: translateX(8px);
+      }
+
+      .signature-line {
+        display: block;
+        font-size: 1.2rem;
+        font-family: "Minecraft";
+        color: #5a2d2d;
+      }
+
+      .signature-name {
+        display: block;
+        font-size: 2.5rem;
+        font-family: "Great Vibes", cursive;
+        color: #5a2d2d;
+        margin-top: 4px;
+      }
+
+      .letter-corner-bl {
+        position: absolute;
+        bottom: 14px;
+        left: 18px;
+        font-size: 1.1rem;
+        color: rgba(220, 20, 60, 0.18);
+        transform: rotate(180deg);
+        pointer-events: none;
+      }
+
+      /* ── HEADER / FOOTER ── */
+      header,
+      footer {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background: rgba(0, 0, 0, 0.1);
+      }
+      header {
+        top: 0;
+        padding: 18px 24px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        justify-content: center;
+      }
+      footer {
+        bottom: 0;
+        padding: 14px;
+        text-align: center;
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        color: rgba(255, 179, 179, 0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      @media (max-width: 768px) {
+        #side-photos {
+          display: none;
+        }
+
+        header {
+          height: 70px;
+          padding: 10px;
+        }
+
+        .font-display-lg {
+          font-size: 1.2rem !important;
+          text-align: center;
+        }
+
+        #envelope-img {
+          width: 140px !important;
+          height: 140px !important;
+        }
+
+        h1 {
+          font-size: 2rem !important;
+        }
+
+        #letter-overlay {
+          padding: 60px 0 80px;
+        }
+
+        #letter-container {
+          width: 100vw;
+          max-width: 100vw;
+          margin: 0 auto;
+        }
+
+        #letter-gif {
+          width: 100%;
+        }
+
+        #letter-text-overlay {
+          top: 27.5%;
+          left: 14%;
+          width: 72%;
+          height: 50%;
+
+          overflow-y: auto;
+          overflow-x: hidden;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .letter-title {
+          font-size: 1rem;
+          transform: translateY(0px);
+        }
+
+        .letter-content {
+          font-size: 0.78rem;
+          line-height: 1.6;
+        }
+
+        .letter-body {
+          transform: translateY(10px);
+        }
+
+        .signature {
+          margin-top: 40px;
+        }
+
+        .signature-line {
+          font-size: 0.8rem;
+        }
+
+        .signature-name {
+          font-size: 1.3rem;
+        }
+
+        footer {
+          font-size: 0.55rem;
+        }
+      }
+      .page-exit {
+        animation: pageExit 1s ease forwards;
+      }
+
+      @keyframes pageExit {
+        from {
+          opacity: 1;
+          transform: scale(1);
+          filter: blur(0px);
+        }
+        to {
+          opacity: 0;
+          transform: scale(1.03);
+          filter: blur(8px);
+        }
+      }
+
+      #side-photos {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 25;
+      }
+
+      .side-photo {
+        position: absolute;
+
+        width: 350px;
+        height: 350px;
+
+        object-fit: cover;
+
+        transition: all 0.4s ease;
+
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .side-photo:hover {
+        transform: scale(1.08);
+      }
+
+      .photo1 {
+        top: 80px;
+        left: 40px;
+        transform: rotate(-12deg);
+      }
+
+      .photo2 {
+        top: 420px;
+        left: 70px;
+        transform: rotate(8deg);
+      }
+
+      .photo3 {
+        top: 800px;
+        left: 40px;
+        transform: rotate(-7deg);
+      }
+
+      .photo4 {
+        top: 80px;
+        right: 40px;
+        transform: rotate(10deg);
+      }
+
+      .photo5 {
+        top: 420px;
+        right: 10px;
+        transform: rotate(-9deg);
+      }
+
+      .photo6 {
+        top: 760px;
+        right: 40px;
+        transform: rotate(7deg);
+      }
+
+      /* TOP OF LETTER */
+
+      .top1 {
+        top: 40px;
+        left: 20%;
+        width: 280px;
+        height: 280px;
+        transform: rotate(-12deg);
+        z-index: 20;
+      }
+
+      .top2 {
+        top: 40px;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        transform: translateX(-50%) rotate(6deg);
+        z-index: 20;
+      }
+
+      .top3 {
+        top: 40px;
+        right: 20%;
+        width: 280px;
+        height: 280px;
+        transform: rotate(12deg);
+        z-index: 20;
+      }
+
+      /* BELOW PHOTO 3 */
+
+      .extra-left {
+        top: 1120px;
+        left: 200px;
+        width: 300px;
+        height: 300px;
+        transform: rotate(10deg);
+      }
+
+      /* BELOW PHOTO 6 */
+
+      .extra-right {
+        top: 1120px;
+        right: 200px;
+        width: 300px;
+        height: 300px;
+        transform: rotate(-10deg);
+      }
+
+      /* BOTTOM OF LETTER */
+
+      .bottom1 {
+        top: 1110px;
+        left: 25%;
+        width: 280px;
+        height: 280px;
+        transform: rotate(-10deg);
+        z-index: 20;
+      }
+
+      .bottom2 {
+        top: 1110px;
+        left: 50%;
+        width: 280px;
+        height: 280px;
+        transform: translateX(-50%) rotate(5deg);
+        z-index: 20;
+      }
+
+      .bottom3 {
+        top: 1110px;
+        right: 25%;
+        width: 280px;
+        height: 280px;
+        transform: rotate(10deg);
+        z-index: 20;
+      }
+
+      .show-photos .side-photo {
+        visibility: visible;
+        animation: photoAppear 1.2s ease forwards;
+      }
+
+      .photo1 {
+        animation-delay: 0.4s;
+      }
+      .photo2 {
+        animation-delay: 0.7s;
+      }
+      .photo3 {
+        animation-delay: 1s;
+      }
+      .photo4 {
+        animation-delay: 0.5s;
+      }
+      .photo5 {
+        animation-delay: 0.8s;
+      }
+      .photo6 {
+        animation-delay: 1.1s;
+      }
+
+      .top1 {
+        animation-delay: 0.2s;
+      }
+
+      .top2 {
+        animation-delay: 0.4s;
+      }
+
+      .top3 {
+        animation-delay: 0.6s;
+      }
+
+      .extra-left {
+        animation-delay: 1.3s;
+      }
+
+      .extra-right {
+        animation-delay: 1.4s;
+      }
+
+      .bottom1 {
+        animation-delay: 1.5s;
+      }
+
+      .bottom2 {
+        animation-delay: 1.6s;
+      }
+
+      .bottom3 {
+        animation-delay: 1.7s;
+      }
+
+      @keyframes photoAppear {
+        from {
+          opacity: 0;
+          transform: scale(0.7) rotate(0deg);
+          filter: blur(10px);
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ── LETTER SCROLLBAR ── */
+      #letter-text-overlay::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #letter-text-overlay::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 999px;
+      }
+
+      #letter-text-overlay::-webkit-scrollbar-thumb {
+        border-radius: 999px;
+        background: linear-gradient(180deg, #8b3a3a, #c95f5f, #f0b8a8);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        box-shadow:
+          inset 0 0 4px rgba(255, 255, 255, 0.3),
+          0 0 8px rgba(139, 58, 58, 0.35);
+      }
+
+      #letter-text-overlay::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, #a34848, #d86a6a, #ffd2c4);
+        box-shadow: 0 0 12px rgba(220, 20, 60, 0.5);
+      }
+
+      /* ── PAGE SCROLLBAR (Music Page Style) ── */
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #1a1c1c;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #47242b;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #dc143c;
+      }
+
+      html::-webkit-scrollbar-track,
+      body::-webkit-scrollbar-track {
+        background: transparent !important;
+      }
+
+      html::-webkit-scrollbar-corner,
+      body::-webkit-scrollbar-corner {
+        background: transparent !important;
+      }
+
+      html {
+        scrollbar-gutter: stable;
+      }
+
+      body:not(.letter-open),
+      html:not(.letter-open) {
+        overflow: hidden;
+        height: 100%;
+        overscroll-behavior: none;
+      }
+    </style>
+  </head>
+
+  <body class="page-entrance">
+    <header
+      class="fixed top-0 left-0 w-full z-50 flex justify-center items-center px-5 md:px-20 py-4 h-20 border-b border-white/10"
+      style="background: rgba(10, 4, 4, 0.85)"
+    >
+      <div class="flex items-center justify-center w-full max-w-[1200px]">
+        <div
+          class="font-display-lg text-xl md:text-3xl text-primary tracking-widest uppercase"
+        >
+          Happy 1st Anniversary
+        </div>
+      </div>
+    </header>
+
+    <!-- ENVELOPE SECTION -->
+    <div id="envelope-section">
+      <div id="envelope-trigger" style="cursor: pointer">
+        <div class="opening-heart">
+          <img
+            id="envelope-img"
+            class="envelope-image"
+            style="
+              width: 208px;
+              height: 208px;
+              object-fit: contain;
+              image-rendering: pixelated;
+            "
+            src="messagepopup_layer1.png"
+            alt="Heart Envelope"
+            onmouseenter="this.src = 'messagepopup_layer2.png'"
+            onmouseleave="this.src = 'messagepopup_layer1.png'"
+          />
+        </div>
+        <div
+          style="
+            margin-top: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <h1
+            style="
+              font-family: serif;
+              font-size: clamp(2rem, 8vw, 3.5rem);
+              margin: 0 0 1.25rem;
+              color: #e2e2e2;
+            "
+          >
+            For my soulmate
+          </h1>
+          <div
+            class="click-title glass-panel"
+            style="
+              padding: 1rem 2rem;
+              border-radius: 999px;
+              display: inline-flex;
+              align-items: center;
+              gap: 12px;
+            "
+          >
+            <span
+              style="
+                text-transform: uppercase;
+                letter-spacing: 0.35em;
+                font-size: 0.85rem;
+                color: #ffb3b3;
+              "
+              >CLICK YOUR MESSAGE</span
+            >
+            <span class="material-symbols-outlined" style="color: #ffb3b3"
+              >favorite</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="photo-background" class="hidden-state"></div>
+
+    <!-- Side photos -->
+    <div id="side-photos">
+      <img class="side-photo photo1" src="photo1.png" />
+      <img class="side-photo photo2" src="photo2.png" />
+      <img class="side-photo photo3" src="photo3.png" />
+      <img class="side-photo photo4" src="photo4.png" />
+      <img class="side-photo photo5" src="photo5.png" />
+      <img class="side-photo photo6" src="photo6.png" />
+
+      <!-- TOP PHOTOS -->
+      <img class="side-photo top1" src="photo7.png" />
+      <img class="side-photo top2" src="photo8.png" />
+      <img class="side-photo top3" src="photo9.png" />
+
+      <!-- BELOW PHOTO 3 & 6 -->
+      <img class="side-photo extra-left" src="photo10.png" />
+      <img class="side-photo extra-right" src="photo11.png" />
+
+      <!-- BOTTOM OF LETTER -->
+      <img class="side-photo bottom1" src="photo12.png" />
+      <img class="side-photo bottom2" src="photo13.png" />
+      <img class="side-photo bottom3" src="photo14.png" />
+    </div>
+
+    <!-- LETTER -->
+    <div id="letter-overlay" class="hidden-state">
+      <div id="letter-container">
+        <img id="letter-gif" src="LETTERPLATFORM-export.gif" alt="Letter" />
+        <div id="letter-text-overlay">
+          <div id="letter-content" class="letter-content">
+            <h2 class="letter-title">HAPPY 1ST ANNIVERSARY</h2>
+
+            <div class="letter-body">
+              <p>Dear Miggy,</p>
+
+              <p>First of all, wow.</p>
+
+              <p>Like actually wow.</p>
+
+              <p>We did it.</p>
+
+              <p>
+                After all these years, after all the times we stopped talking,
+                found our way back to each other, liked each other at the wrong
+                time, tried again, got separated again, and somehow still ended
+                up together, we're finally celebrating our first anniversary.
+              </p>
+
+              <p>And honestly, I'm so proud of us.</p>
+
+              <p>
+                Not just because we made it to one year, but because of
+                everything it took for us to get here.
+              </p>
+
+              <p>
+                When people ask about our story, I always think it's funny
+                because our story didn't start a year ago.
+              </p>
+
+              <p>It started years and years ago when we were still kids.</p>
+
+              <p>
+                I still remember seeing you back when I was attending my tutor.
+                At first, you were just that boy I would always see around.
+                Sometimes I'd catch a glimpse of you, but I never really thought
+                much about it. Then one of my friends introduced us and we
+                became friends.
+              </p>
+
+              <p>
+                After my tutor sessions, we'd play together with our friends.
+                Looking back now, it's funny because apparently everyone knew
+                you had a crush on me except me. Our friends would always tease
+                us whenever we were together, and I was completely clueless.
+              </p>
+
+              <p>
+                One of my favorite memories from when we were kids was during
+                Simbang Gabi.
+              </p>
+
+              <p>
+                I don't even know if you remember it as much as I do, but I
+                definitely still do.
+              </p>
+
+              <p>
+                We were both chosen for the alay of the candles, and neither of
+                us even knew that the other was there. We didn't know we were in
+                the same place until we suddenly saw each other. It was such a
+                simple moment, but somehow it stayed with me all these years.
+              </p>
+
+              <p>Looking back now, it feels so us.</p>
+
+              <p>
+                Even back then, somehow our paths kept crossing without us
+                planning it.
+              </p>
+
+              <p>Then the pandemic happened.</p>
+
+              <p>Everything changed.</p>
+
+              <p>
+                My parents decided to transfer me to another school because they
+                wanted a change. Honestly, I thought that would probably be the
+                end of our friendship.
+              </p>
+
+              <p>But somehow life said, "Not yet.</p>
+
+              <p>
+                When Grade 6 started and online classes began, I found out that
+                you were my classmate.
+              </p>
+
+              <p>
+                Out of all the people and all the schools, there you were again.
+              </p>
+
+              <p>
+                We started talking more because of school. We'd ask each other
+                about assignments, activities, and everything related to class.
+                Whenever we had free time, we'd play CODM together or Roblox
+                whenever we could.
+              </p>
+
+              <p>Back then, those moments felt normal.</p>
+
+              <p>Now they're some of my favorite memories.</p>
+
+              <p>Then graduation happened.</p>
+
+              <p>And once again, we lost contact.</p>
+
+              <p>You transferred schools.</p>
+
+              <p>I transferred schools.</p>
+
+              <p>
+                We ended up going to completely different schools that were so
+                far apart from each other.
+              </p>
+
+              <p>The funny thing is we still lived in the same neighborhood.</p>
+
+              <p>You told me that you would still see me sometimes.</p>
+
+              <p>Meanwhile, I never noticed.</p>
+
+              <p>
+                But to be fair, you already know how I am when I'm outside. Half
+                the time I'm so lost in my own thoughts that I don't know who I
+                pass by unless they call my name.
+              </p>
+
+              <p>Then Grade 8 came.</p>
+
+              <p>
+                And somehow, for the millionth time, we found each other again.
+              </p>
+
+              <p>This time, things were different.</p>
+
+              <p>You confessed.</p>
+
+              <p>You started courting me.</p>
+
+              <p>
+                For the first time, we explored the possibility of becoming
+                something more than friends.
+              </p>
+
+              <p>
+                Unfortunately, things didn't go the way we wanted them to, and
+                we ended up separating again.
+              </p>
+
+              <p>Then late Grade 9 happened.</p>
+
+              <p>And somehow...</p>
+
+              <p>There you were again.</p>
+
+              <p>The feelings were still there.</p>
+
+              <p>After everything, they never really disappeared.</p>
+
+              <p>So we tried again.</p>
+
+              <p>You courted me for ten months.</p>
+
+              <p>Ten whole months.</p>
+
+              <p>
+                But even then, things still didn't work out the way we thought
+                they would.
+              </p>
+
+              <p>And once again, we lost contact completely.</p>
+
+              <p>
+                At that point, anyone would've probably thought that was the end
+                of our story.
+              </p>
+
+              <p>Honestly, maybe we should've thought that too.</p>
+
+              <p>But apparently life had other plans.</p>
+
+              <p>Five months later, I reached out because I wanted closure.</p>
+
+              <p>
+                I didn't want years of friendship to disappear just because
+                things didn't work out romantically.
+              </p>
+
+              <p>I cared about you too much for that.</p>
+
+              <p>So we talked.</p>
+
+              <p>We agreed to stay friends.</p>
+
+              <p>
+                And honestly, that might've been one of the best decisions we
+                ever made.
+              </p>
+
+              <p>
+                Because around that time, we both had crushes on other people.
+              </p>
+
+              <p>And somehow, both of us got rejected.</p>
+
+              <p>Imagine that.</p>
+
+              <p>So we became each other's rant buddies.</p>
+
+              <p>
+                We'd complain about our failed crushes, talk about life, and
+                tell each other everything.
+              </p>
+
+              <p>
+                But somewhere between all those conversations, we started
+                realizing something.
+              </p>
+
+              <p>No matter how many times we stopped talking...</p>
+
+              <p>No matter how many times life separated us...</p>
+
+              <p>No matter how many years passed...</p>
+
+              <p>We always found our way back to each other.</p>
+
+              <p>Again.</p>
+
+              <p>And again.</p>
+
+              <p>And again.</p>
+
+              <p>
+                At some point I started thinking maybe there was a reason for
+                that.
+              </p>
+
+              <p>Because seriously, what are the chances?</p>
+
+              <p>
+                How many times can two people lose contact and still end up
+                finding each other over and over again?
+              </p>
+
+              <p>
+                It felt like no matter what happened, life kept bringing us back
+                together.
+              </p>
+
+              <p>
+                And maybe that's why I started believing that maybe we were
+                meant to happen eventually.
+              </p>
+
+              <p>Not because everything was easy.</p>
+
+              <p>
+                But because despite everything, we kept choosing to come back.
+              </p>
+
+              <p>
+                And finally, on June 6, 2025, after all those years, all those
+                missed chances, all those wrong timings, and all those
+                what-ifs...
+              </p>
+
+              <p>I finally said yes.</p>
+
+              <p>And we became official.</p>
+
+              <p>
+                Honestly, looking back now, I think everything happened exactly
+                when it was supposed to.
+              </p>
+
+              <p>Maybe we needed all those years to grow.</p>
+
+              <p>Maybe we needed all those experiences.</p>
+
+              <p>Maybe we needed all those lessons.</p>
+
+              <p>Because now, one year later, here we are.</p>
+
+              <p>Still together.</p>
+
+              <p>Still laughing.</p>
+
+              <p>Still annoying each other.</p>
+
+              <p>Still supporting each other.</p>
+
+              <p>Still choosing each other.</p>
+
+              <p>And I'm so happy that it's you.</p>
+
+              <p>
+                I'm also really proud of us because we managed to survive Grade
+                11 together.
+              </p>
+
+              <p>Congratulations to both of us.</p>
+
+              <p>
+                We completed one of the most stressful school years while still
+                staying together and being there for each other.
+              </p>
+
+              <p>I know there were a lot of times when I was busy.</p>
+
+              <p>A lot of times when we couldn't talk as much.</p>
+
+              <p>A lot of schedule conflicts.</p>
+
+              <p>A lot of days where we were both tired.</p>
+
+              <p>But somehow, we still made it work.</p>
+
+              <p>
+                And I hope you know that even if I seem busy, you can always
+                call me.
+              </p>
+
+              <p>Even if it's around 7 PM.</p>
+
+              <p>Even if I have school stuff.</p>
+
+              <p>Even if I'm working on something.</p>
+
+              <p>
+                You can call me on Discord and I'll answer whenever I can
+                because hearing from you will never be a burden to me.
+              </p>
+
+              <p>I also want to say sorry for something.</p>
+
+              <p>I know I'm not the clingiest girlfriend.</p>
+
+              <p>
+                Especially when we're around Mama because you already know how
+                she thinks.
+              </p>
+
+              <p>
+                And that's also why when we were in the jeep together, I wasn't
+                really comfortable being super touchy.
+              </p>
+
+              <p>It's not because I don't love you.</p>
+
+              <p>It's not because I'm embarrassed of you.</p>
+
+              <p>It's simply because PDA has never really been my thing.</p>
+
+              <p>I'm just naturally not a very clingy person.</p>
+
+              <p>I can be clingy sometimes.</p>
+
+              <p>You know that. But not all the time.</p>
+
+              <p>
+                And I know there are moments where I probably seem less
+                affectionate than other girlfriends.
+              </p>
+
+              <p>For that, I'm sorry.</p>
+
+              <p>
+                But I hope you know that my love for you has never depended on
+                how clingy I am.
+              </p>
+
+              <p>
+                Because if there's one thing this story has proven, it's that I
+                love you enough to keep finding my way back to you.
+              </p>
+
+              <p>Every single time.</p>
+
+              <p>Thank you for being patient with me.</p>
+
+              <p>Thank you for understanding me.</p>
+
+              <p>Thank you for accepting me for who I am.</p>
+
+              <p>Thank you for staying.</p>
+
+              <p>
+                Thank you for being my best friend long before you became my
+                boyfriend.
+              </p>
+
+              <p>Thank you for every conversation.</p>
+
+              <p>
+                Every laugh. Every game. Every memory. Every late-night talk.
+                Every reassurance. Every effort. Every second chance.
+              </p>
+
+              <p>
+                And thank you for proving that sometimes the right person isn't
+                someone new.
+              </p>
+
+              <p>Sometimes it's the person who's been there all along.</p>
+
+              <p>The person who keeps finding their way back.</p>
+
+              <p>The person who feels like home.</p>
+
+              <p>I don't know exactly what our future will look like.</p>
+
+              <p>
+                But if there's one thing I've learned from our story, it's that
+                no matter where life takes us, we've always somehow managed to
+                find each other.
+              </p>
+
+              <p>And this time, I hope we stay.</p>
+
+              <p>I love you so much.</p>
+
+              <p>Happy 1st Anniversary, beb</p>
+
+              <p>We made it.</p>
+
+              <p>And I can't wait to make even more memories with you.</p>
+
+              <p>
+                P.S. If someone told our younger selves—the kids at tutor, the
+                kids playing after class, the kids standing together during
+                Simbang Gabi—that we'd be here celebrating our first anniversary
+                years later, I don't think either of us would've believed them.
+                But somehow, here we are. And I think that's my favorite thing
+                about us.
+              </p>
+
+              <p>❤️</p>
+            </div>
+
+            <div class="signature">
+              <span class="signature-line">Forever Yours,</span>
+              <span class="signature-name">Ellie</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let petalInterval;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const img = document.getElementById("envelope-img");
+        const trigger = document.getElementById("envelope-trigger");
+        trigger.addEventListener("mouseenter", () =>
+          img.classList.add("hovered"),
+        );
+        trigger.addEventListener("mouseleave", () => {
+          img.style.animation = "none";
+          img.classList.remove("hovered");
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => (img.style.animation = "")),
+          );
+        });
+        trigger.addEventListener("click", revealLetter);
+      });
+
+      function createPetal() {
+        const p = document.createElement("div");
+        p.className = "petal";
+        const s = Math.random() * 10 + 8;
+        p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * 100}vw;animation:fall ${Math.random() * 5 + 4}s linear forwards;`;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 9000);
+      }
+
+      function revealLetter() {
+        const envelope = document.getElementById("envelope-section");
+        const overlay = document.getElementById("letter-overlay");
+        const card = document.getElementById("letter-container");
+        const img = document.getElementById("envelope-img");
+
+        img.style.animation = "none";
+        img.classList.remove("hovered");
+        envelope.classList.add("fade-out");
+
+        setTimeout(() => {
+          envelope.style.display = "none";
+
+          overlay.classList.remove("hidden-state");
+
+          window.scrollTo(0, 0);
+          document.body.classList.add("letter-open");
+          document.documentElement.classList.add("letter-open");
+
+          requestAnimationFrame(() => {
+            overlay.classList.add("active");
+            setTimeout(() => {
+              card.classList.add("pull-out");
+              document
+                .getElementById("side-photos")
+                .classList.add("show-photos");
+            }, 150);
+          });
+
+          for (let i = 0; i < 25; i++) setTimeout(createPetal, i * 120);
+          petalInterval = setInterval(createPetal, 500);
+        }, 700);
+      }
+
+      function resetView() {
+        const envelope = document.getElementById("envelope-section");
+        const overlay = document.getElementById("letter-overlay");
+        const card = document.getElementById("letter-container");
+
+        clearInterval(petalInterval);
+        card.classList.remove("pull-out");
+        document.getElementById("side-photos").classList.remove("show-photos");
+        setTimeout(() => overlay.classList.remove("active"), 300);
+        setTimeout(() => {
+          overlay.classList.add("hidden-state");
+          envelope.style.display = "";
+          setTimeout(() => {
+            envelope.classList.remove("fade-out");
+            document.getElementById("envelope-img").style.animation = "";
+          }, 100);
+        }, 800);
+      }
+
+      window.addEventListener("scroll", () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = scrollTop / docHeight;
+
+        const signature = document.querySelector(".signature");
+        const photos = document.querySelectorAll(".side-photo");
+
+        if (progress > 0.75) {
+          signature.classList.add("reveal");
+        }
+
+        photos.forEach((photo, i) => {
+          const triggerPoint = window.innerHeight * (0.6 + i * 0.25);
+          if (scrollTop > triggerPoint) {
+            photo.classList.add("visible");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

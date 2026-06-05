@@ -1,0 +1,1118 @@
+<!doctype html>
+<html class="dark" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Happy 1st Anniversary</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#1a1c1c",
+              "surface-variant": "#333535",
+              "on-surface": "#e2e2e2",
+              "secondary-container": "#920703",
+              "on-secondary-container": "#ff9a8a",
+              primary: "#ffb3b3",
+              background: "#121414",
+              "primary-container": "#dc143c",
+              "on-primary-container": "#fff1f0",
+              outline: "#ac8888",
+            },
+            fontFamily: {
+              "display-lg": ["EB Garamond"],
+              "headline-md": ["EB Garamond"],
+              "body-md": ["Hanken Grotesk"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "1.5rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      @keyframes vinyl-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .animate-vinyl {
+        animation: vinyl-rotate 4s linear infinite;
+      }
+
+      .glass-panel {
+        background: rgba(20, 14, 14, 0.75);
+        border: 1px solid rgba(172, 136, 136, 0.15);
+      }
+
+      .pixel-vinyl {
+        background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAtgIX8cM3PIr0EKhXMvXH7yEBIqhT3JOvvooH3pMHDeG9mJW1elL4ARk4KImHv6I99WnAx1HQ01Pkbj4Ryu7HPT6IH34S-60t5I6XUs-FxMN_0gbmEBzJsWSY6FsEOYnhU6Hl7bQL999WvUpFcz5qeEnuwFdC347DsSRuVzLbZDVvAXoKZ8O7BuirCS7AYaRDzYmKtPtbIVyamci0iZJC8UhDfntDPbhWHIqsiFnazuXxcw7753rJPo1EpfHu_FWH2xKEUoGJOwlw);
+        background-size: 400% 400%;
+      }
+      .vinyl-0 {
+        background-position: 0% 0%;
+      }
+      .vinyl-1 {
+        background-position: 33.3% 0%;
+      }
+      .vinyl-2 {
+        background-position: 66.6% 0%;
+      }
+      .vinyl-3 {
+        background-position: 100% 0%;
+      }
+      .vinyl-4 {
+        background-position: 0% 33.3%;
+      }
+      .vinyl-5 {
+        background-position: 33.3% 33.3%;
+      }
+      .vinyl-6 {
+        background-position: 66.6% 33.3%;
+      }
+      .vinyl-7 {
+        background-position: 100% 33.3%;
+      }
+      .vinyl-8 {
+        background-position: 0% 66.6%;
+      }
+      .vinyl-9 {
+        background-position: 33.3% 66.6%;
+      }
+      .vinyl-10 {
+        background-position: 66.6% 66.6%;
+      }
+      .vinyl-11 {
+        background-position: 100% 66.6%;
+      }
+
+      canvas#petals {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 50;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a1c1c;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #47242b;
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #dc143c;
+      }
+
+      .vault-item {
+        cursor: pointer;
+        transition: all 0.2s;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+      .vault-item:hover {
+        transform: scale(1.04);
+      }
+      .vault-item.active {
+        border-color: rgba(220, 20, 60, 0.5) !important;
+        background: rgba(220, 20, 60, 0.15) !important;
+      }
+      .vault-item.active .vinyl-disk {
+        animation: vinyl-rotate 4s linear infinite;
+      }
+
+      #bg-video {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+        transform: translateZ(0);
+        will-change: transform;
+        content-visibility: visible;
+        opacity: 0.95;
+      }
+      #bg-overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 8, 8, 0.15) 0%,
+          rgba(30, 10, 14, 0.12) 100%
+        );
+        z-index: -1;
+      }
+      body {
+        background: #121414;
+      }
+
+      .left-panel {
+        background: rgba(10, 6, 6, 0.82);
+      }
+      .right-panel {
+        background: rgba(14, 8, 8, 0.78);
+      }
+
+      #player-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+        z-index: 2;
+
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+      @keyframes imgFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(1.03);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .img-fadein {
+        animation: imgFadeIn 0.4s ease forwards;
+      }
+
+      @keyframes crimsonPulse {
+        0%,
+        100% {
+          box-shadow:
+            0 0 18px 2px rgba(220, 20, 60, 0.45),
+            0 0 40px 4px rgba(220, 20, 60, 0.18);
+        }
+        50% {
+          box-shadow:
+            0 0 28px 6px rgba(220, 20, 60, 0.65),
+            0 0 60px 10px rgba(220, 20, 60, 0.28);
+        }
+      }
+      .crimson-glow {
+        box-shadow:
+          0 0 18px 2px rgba(220, 20, 60, 0.45),
+          0 0 40px 4px rgba(220, 20, 60, 0.18);
+        animation: crimsonPulse 2.4s ease-in-out infinite;
+      }
+
+      /* BIG PLAYER ANIMATION */
+
+      #main-player {
+        transition:
+          transform 0.6s ease,
+          opacity 0.6s ease;
+      }
+
+      #main-player.minimized {
+        transform: scale(0.75);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #music-layout {
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      #music-layout.minimized {
+        opacity: 0;
+        transform: scale(0.92);
+        pointer-events: none;
+      }
+
+      /* MINI PLAYER */
+
+      .mini-player {
+        position: fixed;
+        left: 50%;
+        bottom: 12px;
+
+        transform: translate(-50%, 120%);
+        width: calc(100% - 24px);
+        max-width: 520px;
+
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        padding: 12px;
+
+        border-radius: 18px;
+
+        background: rgba(10, 10, 10, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+
+        z-index: 999;
+
+        opacity: 0;
+        pointer-events: none;
+
+        transition: 0.45s ease;
+      }
+
+      /* SHOW STATE */
+      .mini-player.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        pointer-events: auto;
+      }
+
+      .mini-cover {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      .mini-info {
+        flex: 1;
+      }
+
+      .mini-now-playing {
+        color: #c8929d;
+        font-size: 10px;
+        letter-spacing: 2px;
+      }
+
+      .mini-info h3 {
+        color: white;
+        margin-top: 2px;
+        font-size: 14px;
+        line-height: 1.2;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .mini-controls {
+        display: flex;
+        gap: 10px;
+      }
+
+      .mini-controls button,
+      #mini-close {
+        width: 36px;
+        height: 36px;
+
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .mini-controls button:hover,
+      #mini-close:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      @media (max-width: 480px) {
+        .mini-player {
+          gap: 10px;
+          padding: 10px;
+        }
+
+        .mini-controls {
+          gap: 6px;
+        }
+
+        .mini-info h3 {
+          max-width: 110px;
+          font-size: 13px;
+        }
+      }
+
+      html,
+      body {
+        height: auto;
+        min-height: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      @media (max-width: 480px) {
+        .vault-item .size-28 {
+          width: 6.5rem !important;
+          height: 6.5rem !important;
+        }
+      }
+
+      #bg-video {
+        transition:
+          filter 0.5s ease,
+          opacity 0.5s ease;
+      }
+
+      /* when music is playing */
+      body.music-active #bg-video {
+        filter: brightness(0.6) blur(0px);
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-[#121414] text-on-surface font-body-md overflow-y-auto overflow-x-hidden"
+  >
+    <video
+      id="bg-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      preload="auto"
+      disablePictureInPicture
+      disableRemotePlayback
+    >
+      <source src="Bgvideo.mp4" type="video/mp4" />
+    </video>
+    <div id="bg-overlay"></div>
+
+    <canvas id="petals" width="1280" height="1024"></canvas>
+
+    <div class="relative flex min-h-screen w-full flex-col">
+      <header
+        class="fixed top-0 left-0 w-full z-50 flex justify-center items-center px-4 py-3 md:px-20 md:py-4 h-auto border-b border-white/10"
+        style="background: rgba(10, 4, 4, 0.85)"
+      >
+        <div
+          class="flex flex-col items-center justify-center w-full max-w-[1200px] text-center"
+        >
+          <div
+            class="text-[#c8929d] text-[10px] tracking-[0.3em] uppercase mb-1"
+          >
+            Our Memory Vault
+          </div>
+
+          <div
+            class="font-display-lg text-lg md:text-3xl text-primary tracking-widest uppercase leading-tight"
+          >
+            Happy 1st Anniversary
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 flex pt-20">
+        <div
+          id="music-layout"
+          class="grid grid-cols-1 lg:grid-cols-2 w-full min-h-screen"
+        >
+          <!-- LEFT: Player -->
+          <div
+            id="main-player"
+            class="left-panel flex flex-col border-r border-white/5 p-4 md:p-8 lg:p-12 overflow-y-visible"
+          >
+            <div class="max-w-2xl mx-auto w-full flex flex-col justify-center">
+              <div class="mb-8">
+                <h2
+                  class="text-[#c8929d] text-sm font-semibold uppercase tracking-widest mb-2"
+                >
+                  Now Playing
+                </h2>
+                <h3
+                  class="text-white text-4xl md:text-5xl font-display-lg font-bold"
+                  id="track-title"
+                >
+                  Music Name
+                </h3>
+              </div>
+
+              <!-- Player Display -->
+              <div
+                style="
+                  position: relative;
+                  width: 100%;
+                  max-width: min(500px, 90vw);
+                  margin: 0 auto;
+                  aspect-ratio: 1;
+                  border-radius: 1.5rem;
+                  overflow: hidden;
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  background: #1a0a0d;
+                "
+              >
+                <div
+                  id="idle-state"
+                  style="
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 1rem;
+                    z-index: 1;
+                  "
+                >
+                  <div
+                    style="
+                      width: 5rem;
+                      height: 5rem;
+                      border-radius: 9999px;
+                      background: rgba(220, 20, 60, 0.2);
+                      border: 1px solid rgba(220, 20, 60, 0.4);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      box-shadow: 0 0 30px rgba(220, 20, 60, 0.3);
+                    "
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="
+                        font-size: 3rem;
+                        font-variation-settings: &quot;FILL&quot; 1;
+                      "
+                      >music_note</span
+                    >
+                  </div>
+                  <p
+                    style="
+                      color: rgba(255, 255, 255, 0.5);
+                      font-family: &quot;EB Garamond&quot;, serif;
+                      font-style: italic;
+                      font-size: 1.25rem;
+                    "
+                  >
+                    Select a Memory
+                  </p>
+                </div>
+
+                <img id="player-img" src="" alt="Memory photo" />
+
+                <div
+                  style="
+                    position: absolute;
+                    inset: 0;
+                    background: linear-gradient(
+                      to top,
+                      rgba(0, 0, 0, 0.4) 0%,
+                      transparent 60%
+                    );
+                    pointer-events: none;
+                    z-index: 3;
+                  "
+                ></div>
+              </div>
+
+              <!-- Controls -->
+              <div class="mt-10 max-w-[500px] mx-auto w-full">
+                <div class="flex flex-col gap-4">
+                  <div class="flex items-center gap-4 w-full">
+                    <span
+                      class="text-xs text-white/40 tabular-nums"
+                      id="current-time"
+                      >0:00</span
+                    >
+                    <div
+                      class="h-1 flex-1 bg-white/5 rounded-full overflow-hidden cursor-pointer"
+                      id="seek-bar"
+                    >
+                      <div
+                        class="h-full w-0 bg-primary-container transition-all duration-300"
+                        id="progress-bar"
+                      ></div>
+                    </div>
+                    <span
+                      class="text-xs text-white/40 tabular-nums"
+                      id="total-time"
+                      >0:00</span
+                    >
+                  </div>
+                  <div class="flex items-center justify-center gap-10">
+                    <button
+                      class="text-white/40 hover:text-white transition-colors"
+                      id="prev-btn"
+                    >
+                      <span class="material-symbols-outlined text-3xl"
+                        >skip_previous</span
+                      >
+                    </button>
+                    <button
+                      class="size-14 rounded-full bg-primary-container/20 border border-primary-container/40 text-white flex items-center justify-center shadow-lg hover:bg-primary-container/40 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      disabled
+                      id="play-pause"
+                    >
+                      <span
+                        class="material-symbols-outlined text-4xl"
+                        id="play-icon"
+                        >play_arrow</span
+                      >
+                    </button>
+                    <button
+                      class="text-white/40 hover:text-white transition-colors"
+                      id="next-btn"
+                    >
+                      <span class="material-symbols-outlined text-3xl"
+                        >skip_next</span
+                      >
+                    </button>
+                  </div>
+                  <div class="flex items-center gap-3 mt-2">
+                    <span
+                      class="material-symbols-outlined text-white/30 text-xl"
+                      >volume_down</span
+                    >
+                    <input
+                      type="range"
+                      id="volume-slider"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value="1"
+                      class="flex-1 h-1 appearance-none bg-white/10 rounded-full outline-none cursor-pointer accent-primary-container"
+                    />
+                    <span
+                      class="material-symbols-outlined text-white/30 text-xl"
+                      >volume_up</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 opacity-30 text-center">
+                <p class="font-display-lg text-lg italic text-white">
+                  "Click a memory to play it."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Vault -->
+          <div class="right-panel flex flex-col overflow-visible">
+            <div class="p-4 md:p-12">
+              <header class="mb-10 flex items-center justify-between">
+                <h2
+                  class="text-white text-3xl font-display-lg font-bold flex items-center gap-3"
+                >
+                  <span class="material-symbols-outlined text-primary-container"
+                    >auto_awesome</span
+                  >
+                  The Vault
+                </h2>
+                <div
+                  class="text-[#c8929d] text-xs font-semibold uppercase tracking-widest"
+                  id="vault-count"
+                >
+                  12 Memories
+                </div>
+              </header>
+              <div
+                class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 pb-24"
+                id="vault-grid"
+              ></div>
+
+              <!-- Footer Action -->
+              <div
+                class="flex flex-col items-center justify-center py-10 mb-20 space-y-6 mt-10"
+              >
+                <div class="w-12 h-px bg-outline opacity-30 mb-4"></div>
+                <button
+                  class="group relative flex items-center justify-center min-w-[280px] h-14 bg-primary-container text-white rounded-full crimson-glow transition-all duration-500 hover:scale-105 active:scale-95"
+                  id="gallery-btn"
+                >
+                  <span
+                    class="relative z-10 font-display-lg text-lg tracking-[0.2em] uppercase pl-2"
+                    >NEXT</span
+                  >
+                  <div
+                    class="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-10 transition-opacity"
+                  ></div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- MINI PLAYER -->
+    <div id="mini-player" class="mini-player">
+      <img id="mini-player-img" src="" alt="" class="mini-cover" />
+
+      <div class="mini-info">
+        <span class="mini-now-playing"> NOW PLAYING </span>
+
+        <h3 id="mini-track-title">Song Title</h3>
+      </div>
+
+      <div class="mini-controls">
+        <button id="mini-prev">
+          <span class="material-symbols-outlined"> skip_previous </span>
+        </button>
+
+        <button id="mini-play">
+          <span id="mini-play-icon" class="material-symbols-outlined">
+            pause
+          </span>
+        </button>
+
+        <button id="mini-next">
+          <span class="material-symbols-outlined"> skip_next </span>
+        </button>
+      </div>
+
+      <button id="mini-close">
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+    </div>
+
+    <script>
+      const songs = [
+        {
+          title: "Everything Has Changed",
+          audio:
+            "MUSIC FOR CDS/Taylor Swift - Everything Has Changed (Taylor's Version) (Lyric Video) ft. Ed Sheeran.mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Your Song",
+          audio: "MUSIC FOR CDS/Your Song - Parokya Ni Edgar (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Nahanap Kita",
+          audio: "MUSIC FOR CDS/Nahanap Kita - Amiel Sol (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Dalangin",
+          audio: "MUSIC FOR CDS/Dalangin by Earl Agustin (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Make It With You",
+          audio: "MUSIC FOR CDS/Make It With You - Ben&Ben (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "I Choose You",
+          audio: "MUSIC FOR CDS/keshi - I Choose You (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Kalapastangan",
+          audio: "MUSIC FOR CDS/fitterkarma - Kalapastangan (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Wish List",
+          audio: "MUSIC FOR CDS/Taylor Swift - Wi$h Li$t (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Be With You",
+          audio: "MUSIC FOR CDS/The Ridleys - Be with you (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "I Got Mine",
+          audio: "MUSIC FOR CDS/Paul Partohap - I GOT MINE (Lyric Video).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "Passenger Seat",
+          audio:
+            "MUSIC FOR CDS/Passenger Seat - Stephen Speaks (Lyrics) 🎵.mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+        {
+          title: "All I Ever Need",
+          audio: "MUSIC FOR CDS/ALL I EVER NEED- Austin Mahone (Lyrics).mp3",
+          image: "VINYLPLAYER.jpg",
+        },
+      ];
+
+      // ── Petals ──────────────────────────────────────────────────────────
+      const canvas = document.getElementById("petals");
+      const ctx = canvas.getContext("2d");
+      let petals = [];
+      let petalsPaused = false;
+      let lastPetalFrame = 0;
+      const PETAL_FPS = 30;
+      const PETAL_INTERVAL = 1000 / PETAL_FPS;
+
+      function initPetals() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        petals = Array.from({ length: 30 }, () => ({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: 3 + Math.random() * 5,
+          d: Math.random() * 10,
+          a: Math.random() * Math.PI,
+          v: 0.3 + Math.random() * 0.8,
+        }));
+      }
+      function drawPetals(ts) {
+        requestAnimationFrame(drawPetals);
+        if (petalsPaused) return;
+        if (ts - lastPetalFrame < PETAL_INTERVAL) return;
+        lastPetalFrame = ts;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#dc143c10";
+        petals.forEach((p) => {
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.r, p.r / 2, p.a, 0, Math.PI * 2);
+          ctx.fill();
+          p.y += p.v;
+          p.x += Math.sin(p.d) * 0.4;
+          p.a += 0.008;
+          if (p.y > canvas.height) p.y = -10;
+        });
+      }
+      window.addEventListener("resize", initPetals);
+      initPetals();
+      requestAnimationFrame(drawPetals);
+
+      // ── Video keepalive ──────────────────────────────────────────────────
+      const bgVideo = document.getElementById("bg-video");
+      bgVideo.muted = true;
+      bgVideo.loop = true;
+      bgVideo.preload = "auto";
+      bgVideo.load();
+
+      bgVideo.setAttribute("playsinline", "");
+      bgVideo.setAttribute("webkit-playsinline", "");
+      bgVideo.defaultMuted = true;
+
+      function ensureVideo() {
+        if (!bgVideo) return;
+
+        if (bgVideo.paused) {
+          const playPromise = bgVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        }
+      }
+      setInterval(ensureVideo, 300);
+      bgVideo.addEventListener("stalled", ensureVideo);
+      bgVideo.addEventListener("waiting", ensureVideo);
+      bgVideo.addEventListener("pause", ensureVideo);
+
+      // ── DOM refs ─────────────────────────────────────────────────────────
+      const trackTitleEl = document.getElementById("track-title");
+      const playPauseBtn = document.getElementById("play-pause");
+      const playIcon = document.getElementById("play-icon");
+      const progressBar = document.getElementById("progress-bar");
+      const currentTimeEl = document.getElementById("current-time");
+      const totalTimeEl = document.getElementById("total-time");
+      const seekBar = document.getElementById("seek-bar");
+      const volumeSlider = document.getElementById("volume-slider");
+      const playerImg = document.getElementById("player-img");
+      const idleState = document.getElementById("idle-state");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const vaultGrid = document.getElementById("vault-grid");
+      const vaultCount = document.getElementById("vault-count");
+      const mainPlayer = document.getElementById("main-player");
+      const musicLayout = document.getElementById("music-layout");
+
+      const miniPlayer = document.getElementById("mini-player");
+      const miniImg = document.getElementById("mini-player-img");
+      const miniTitle = document.getElementById("mini-track-title");
+
+      const miniPlay = document.getElementById("mini-play");
+      const miniPrev = document.getElementById("mini-prev");
+      const miniNext = document.getElementById("mini-next");
+
+      const miniPlayIcon = document.getElementById("mini-play-icon");
+
+      const miniClose = document.getElementById("mini-close");
+
+      // ── Audio pool ───────────────────────────────────────────────────────
+      const audioPool = [new Audio(), new Audio()];
+      audioPool.forEach((a) => {
+        a.preload = "auto";
+        a.volume = 1;
+      });
+      let activePoolIdx = 0;
+
+      function getActiveAudio() {
+        return audioPool[activePoolIdx];
+      }
+      function getStandbyAudio() {
+        return audioPool[activePoolIdx ^ 1];
+      }
+
+      let currentIndex = null;
+      let cardEls = [];
+      let isPlaying = false;
+
+      function formatTime(s) {
+        if (!isFinite(s) || isNaN(s)) return "0:00";
+        return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+      }
+
+      // ── Build vault cards ────────────────────────────────────────────────
+      songs.forEach((song, i) => {
+        const card = document.createElement("div");
+        card.className =
+          "glass-panel p-4 rounded-xl flex flex-col items-center gap-4 hover:bg-primary-container/10 hover:border-primary-container/30 vault-item";
+        card.innerHTML = `
+    <div class="relative size-28 md:size-32 flex items-center justify-center">
+      <div class="absolute inset-0 bg-[#000] rounded-full border-2 border-[#333535] shadow-inner"></div>
+      <div class="vinyl-disk absolute size-[92%] rounded-full pixel-vinyl vinyl-${i} shadow-lg border border-black/50 transition-transform">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-6 bg-[#47242b] rounded-full border border-black/50 flex items-center justify-center">
+          <div class="size-1 bg-black rounded-full"></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center w-full">
+      <p class="text-white font-medium text-xs truncate px-1">${song.title}</p>
+      <p class="text-[#c8929d] text-[9px] mt-1 opacity-50 uppercase tracking-tighter">MEM_${String(i + 1).padStart(3, "0")}</p>
+    </div>
+  `;
+        card.addEventListener("click", () => loadTrack(i));
+        vaultGrid.appendChild(card);
+        cardEls.push(card);
+      });
+      vaultCount.textContent = `${songs.length} Memories`;
+
+      function setIcon(playing) {
+        isPlaying = playing;
+
+        playIcon.textContent = playing ? "pause" : "play_arrow";
+        miniPlayIcon.textContent = playing ? "pause" : "play_arrow";
+
+        // 👉 ADD THIS
+        if (playing) {
+          document.body.classList.add("music-active");
+        } else {
+          document.body.classList.remove("music-active");
+        }
+      }
+
+      function showImage(src) {
+        if (src) {
+          playerImg.src = src;
+          playerImg.style.display = "block";
+          playerImg.classList.remove("img-fadein");
+          void playerImg.offsetWidth;
+          playerImg.classList.add("img-fadein");
+          idleState.style.display = "none";
+        } else {
+          playerImg.style.display = "none";
+          idleState.style.display = "flex";
+        }
+      }
+
+      function loadTrack(index) {
+        currentIndex = index;
+        const song = songs[index];
+
+        cardEls.forEach((el, i) => el.classList.toggle("active", i === index));
+        trackTitleEl.textContent = song.title;
+        miniTitle.textContent = song.title;
+        miniImg.src = song.image;
+        playPauseBtn.disabled = false;
+        progressBar.style.width = "0%";
+        currentTimeEl.textContent = "0:00";
+        totalTimeEl.textContent = "0:00";
+
+        const current = getActiveAudio();
+        current.pause();
+        setIcon(false);
+
+        showImage(song.image || "");
+
+        musicLayout.classList.add("minimized");
+
+        setTimeout(() => {
+          miniPlayer.classList.add("show");
+        }, 300);
+
+        if (!song.audio) return;
+
+        const standby = getStandbyAudio();
+        standby.src = song.audio;
+        standby.volume = parseFloat(volumeSlider.value);
+        standby.load();
+
+        petalsPaused = true;
+        setTimeout(() => {
+          petalsPaused = false;
+        }, 800);
+
+        const onReady = () => {
+          standby.removeEventListener("canplaythrough", onReady);
+          standby.removeEventListener("canplay", onReady);
+
+          activePoolIdx ^= 1;
+
+          const old = getStandbyAudio();
+          old.pause();
+          old.src = "";
+          old.removeAttribute("src");
+
+          attachAudioEvents(getActiveAudio());
+
+          ensureVideo();
+          getActiveAudio()
+            .play()
+            .then(() => {
+              setIcon(true);
+              ensureVideo();
+            })
+            .catch((e) => console.warn("play failed", e));
+        };
+
+        standby.addEventListener("canplaythrough", onReady);
+        standby.addEventListener("canplay", onReady);
+      }
+
+      function attachAudioEvents(a) {
+        a.ontimeupdate = () => {
+          if (!a.duration) return;
+          progressBar.style.width = (a.currentTime / a.duration) * 100 + "%";
+          currentTimeEl.textContent = formatTime(a.currentTime);
+        };
+        a.onloadedmetadata = () => {
+          totalTimeEl.textContent = formatTime(a.duration);
+        };
+        a.onended = () => {
+          setIcon(false);
+          loadTrack((currentIndex + 1) % songs.length);
+        };
+      }
+
+      attachAudioEvents(audioPool[0]);
+
+      function doPlay() {
+        const a = getActiveAudio();
+        if (!a.src) return;
+        ensureVideo();
+        a.play()
+          .then(() => {
+            setIcon(true);
+            ensureVideo();
+          })
+          .catch(() => {});
+      }
+      function doPause() {
+        getActiveAudio().pause();
+        setIcon(false);
+      }
+
+      // ── Controls ─────────────────────────────────────────────────────────
+      playPauseBtn.addEventListener("click", () => {
+        if (currentIndex === null) return;
+        isPlaying ? doPause() : doPlay();
+      });
+      prevBtn.addEventListener("click", () => {
+        if (currentIndex === null) return;
+        loadTrack((currentIndex - 1 + songs.length) % songs.length);
+      });
+      nextBtn.addEventListener("click", () => {
+        if (currentIndex === null) return;
+        loadTrack((currentIndex + 1) % songs.length);
+      });
+      seekBar.addEventListener("click", (e) => {
+        const a = getActiveAudio();
+        if (!a.duration) return;
+        const rect = seekBar.getBoundingClientRect();
+        a.currentTime = ((e.clientX - rect.left) / rect.width) * a.duration;
+      });
+      volumeSlider.addEventListener("input", () => {
+        const v = parseFloat(volumeSlider.value);
+        audioPool.forEach((a) => {
+          a.volume = v;
+        });
+      });
+
+      miniPlay.addEventListener("click", () => {
+        if (currentIndex === null) return;
+
+        isPlaying ? doPause() : doPlay();
+      });
+
+      miniPrev.addEventListener("click", () => {
+        if (currentIndex === null) return;
+
+        loadTrack((currentIndex - 1 + songs.length) % songs.length);
+      });
+
+      miniNext.addEventListener("click", () => {
+        if (currentIndex === null) return;
+
+        loadTrack((currentIndex + 1) % songs.length);
+      });
+
+      miniClose.addEventListener("click", () => {
+        miniPlayer.classList.remove("show");
+
+        setTimeout(() => {
+          musicLayout.classList.remove("minimized");
+        }, 150);
+      });
+
+      // ── Gallery button ───────────────────────────────────────────────────
+      document.getElementById("gallery-btn").addEventListener("click", () => {
+        // Navigate to next page — update href as needed
+        window.location.href = "welcome_message.html";
+      });
+
+      document.addEventListener("pointerdown", ensureVideo, { once: true });
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+
+        if (currentIndex === null) return;
+
+        const diff = touchStartX - touchEndX;
+
+        // swipe left → next
+        if (diff > 60) {
+          loadTrack((currentIndex + 1) % songs.length);
+        }
+
+        // swipe right → previous
+        if (diff < -60) {
+          loadTrack((currentIndex - 1 + songs.length) % songs.length);
+        }
+      });
+    </script>
+  </body>
+</html>
